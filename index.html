@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kajú Espaço de Beleza</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root { --rose: #c8956c; --rose-claro: #f0d5c0; --dourado: #b8860b; --preto: #1a1a1a; --cinza: #f9f6f3; --texto: #333; }
+    body { font-family: 'Segoe UI', Arial, sans-serif; color: var(--texto); overflow-x: hidden; }
+
+    /* DEMO BANNER */
+    .demo-banner { background: var(--rose); color: white; text-align: center; padding: 10px; font-size: 13px; font-weight: bold; }
+
+    /* HEADER */
+    header { background: var(--preto); padding: 16px 40px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 20px rgba(0,0,0,0.3); }
+    .logo h1 { color: var(--rose-claro); font-size: 24px; font-style: italic; }
+    .logo p { color: #aaa; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; }
+    nav a { color: white; text-decoration: none; margin-left: 24px; font-size: 14px; transition: color 0.3s; }
+    nav a:hover { color: var(--rose-claro); }
+    .btn-header { background: var(--rose); color: white !important; padding: 10px 24px; border-radius: 25px; font-weight: bold; }
+    .btn-header:hover { background: #b07050 !important; }
+
+    /* HERO */
+    .hero { background: linear-gradient(135deg, #1a1a1a 0%, #2d1810 60%, #4a2515 100%); color: white; padding: 100px 40px; display: flex; align-items: center; justify-content: space-between; gap: 40px; flex-wrap: wrap; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; top: -50%; right: -10%; width: 600px; height: 600px; background: radial-gradient(circle, rgba(200,149,108,0.15) 0%, transparent 70%); pointer-events: none; }
+    .hero-texto { max-width: 550px; position: relative; z-index: 1; }
+    .hero-texto h2 { font-size: 52px; line-height: 1.2; margin-bottom: 20px; font-style: italic; }
+    .hero-texto h2 span { color: var(--rose-claro); }
+    .hero-texto p { font-size: 18px; opacity: 0.85; margin-bottom: 40px; line-height: 1.7; }
+    .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
+    .btn-primary { background: var(--rose); color: white; padding: 16px 36px; border-radius: 30px; font-size: 16px; font-weight: bold; text-decoration: none; transition: all 0.3s; border: none; cursor: pointer; }
+    .btn-primary:hover { background: #b07050; transform: translateY(-2px); }
+    .btn-secondary { background: transparent; color: white; padding: 16px 36px; border-radius: 30px; font-size: 16px; font-weight: bold; text-decoration: none; border: 2px solid var(--rose-claro); transition: all 0.3s; }
+    .btn-secondary:hover { background: var(--rose-claro); color: var(--preto); }
+    .hero-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(200,149,108,0.3); border-radius: 20px; padding: 30px; color: white; width: 300px; position: relative; z-index: 1; }
+    .hero-card h3 { color: var(--rose-claro); font-size: 18px; margin-bottom: 20px; font-style: italic; }
+    .hero-item { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .hero-item:last-child { border-bottom: none; }
+    .hero-item .emoji { font-size: 26px; }
+    .hero-item strong { color: white; display: block; font-size: 14px; }
+    .hero-item p { font-size: 12px; color: rgba(255,255,255,0.6); }
+
+    /* NÚMEROS */
+    .numeros { background: var(--rose); padding: 60px 40px; display: flex; justify-content: center; gap: 80px; flex-wrap: wrap; text-align: center; color: white; }
+    .numero h3 { font-size: 48px; font-weight: bold; }
+    .numero p { font-size: 14px; margin-top: 4px; opacity: 0.9; }
+
+    /* SEÇÃO GENÉRICA */
+    .secao { padding: 100px 40px; text-align: center; }
+    .secao.cinza { background: var(--cinza); }
+    .secao.preto { background: var(--preto); color: white; }
+    .secao-titulo { margin-bottom: 60px; }
+    .secao-titulo h2 { font-size: 40px; margin-bottom: 12px; font-style: italic; color: var(--rose); }
+    .secao.preto .secao-titulo h2 { color: var(--rose-claro); }
+    .secao-titulo p { font-size: 17px; color: #636e72; max-width: 600px; margin: 0 auto; }
+    .secao.preto .secao-titulo p { color: #aaa; }
+
+    /* SERVIÇOS */
+    .servicos-tabs { display: flex; justify-content: center; gap: 12px; margin-bottom: 50px; flex-wrap: wrap; }
+    .tab { background: white; color: var(--rose); border: 2px solid var(--rose); padding: 10px 24px; border-radius: 30px; font-size: 14px; font-weight: bold; cursor: pointer; transition: all 0.3s; }
+    .tab.ativo, .tab:hover { background: var(--rose); color: white; }
+    .servicos-conteudo { display: none; max-width: 800px; margin: 0 auto; }
+    .servicos-conteudo.ativo { display: block; }
+
+    .servico-grupo { background: white; border-radius: 16px; padding: 30px; margin-bottom: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); text-align: left; }
+    .servico-grupo h3 { color: var(--rose); font-size: 18px; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid var(--rose-claro); text-transform: uppercase; letter-spacing: 1px; }
+    .servico-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #f0e8e0; }
+    .servico-item:last-child { border-bottom: none; }
+    .servico-item span { font-size: 15px; color: #555; }
+    .servico-item strong { color: var(--rose); font-size: 15px; white-space: nowrap; margin-left: 16px; }
+
+    /* AGENDAMENTO */
+    .agendamento-info { background: #fff8f5; border: 1px solid var(--rose-claro); border-radius: 16px; padding: 30px; max-width: 700px; margin: 0 auto 60px; text-align: left; }
+    .agendamento-info h3 { color: var(--rose); font-size: 18px; margin-bottom: 16px; }
+    .agendamento-info p { color: #555; line-height: 1.8; font-size: 15px; margin-bottom: 8px; }
+    .agendamento-info strong { color: var(--preto); }
+
+    /* FORM */
+    .form { max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form input, .form select, .form textarea { padding: 16px 20px; border: 2px solid var(--rose-claro); border-radius: 12px; font-size: 15px; outline: none; background: white; color: var(--texto); font-family: inherit; }
+    .form input:focus, .form select:focus, .form textarea:focus { border-color: var(--rose); }
+    .form textarea { resize: none; height: 100px; }
+    .btn-enviar { background: var(--rose); color: white; padding: 18px; border: none; border-radius: 12px; font-size: 18px; font-weight: bold; cursor: pointer; transition: all 0.3s; }
+    .btn-enviar:hover { background: #b07050; transform: translateY(-2px); }
+
+    /* DEPOIMENTOS */
+    .depoimentos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; max-width: 1000px; margin: 0 auto; }
+    .depoimento { background: white; padding: 30px; border-radius: 16px; text-align: left; border-left: 4px solid var(--rose); box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
+    .estrelas { color: #f4a623; font-size: 18px; margin-bottom: 12px; }
+    .depoimento p { color: #636e72; line-height: 1.7; font-size: 15px; margin-bottom: 20px; font-style: italic; }
+    .autor { display: flex; align-items: center; gap: 12px; }
+    .autor-avatar { width: 44px; height: 44px; border-radius: 50%; background: var(--rose); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 18px; }
+    .autor-info strong { display: block; font-size: 15px; }
+    .autor-info span { font-size: 13px; color: #636e72; }
+
+    /* FOOTER */
+    footer { background: var(--preto); color: white; padding: 60px 40px 30px; }
+    .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px; }
+    .footer-col h4 { font-size: 16px; margin-bottom: 20px; color: var(--rose-claro); font-style: italic; }
+    .footer-col p, .footer-col a { font-size: 14px; color: rgba(255,255,255,0.6); text-decoration: none; display: block; margin-bottom: 10px; line-height: 1.7; }
+    .footer-col a:hover { color: var(--rose-claro); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 30px; text-align: center; color: rgba(255,255,255,0.4); font-size: 13px; }
+    .footer-bottom span { color: var(--rose-claro); }
+
+    /* WHATSAPP */
+    .whatsapp-fixo { position: fixed; bottom: 30px; right: 30px; background: #25d366; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; box-shadow: 0 4px 20px rgba(37,211,102,0.4); text-decoration: none; z-index: 999; transition: transform 0.3s; }
+    .whatsapp-fixo:hover { transform: scale(1.1); }
+
+    /* ANIMAÇÕES */
+    .animar { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .animar.visivel { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+  <div class="demo-banner">✨ Esta é uma demonstração do site para o Kajú Espaço de Beleza — desenvolvido por Mateus</div>
+
+  <header>
+    <div class="logo">
+      <h1>✨ Kajú Espaço de Beleza</h1>
+      <p>Beleza • Cosméticos • Cuidados Pessoais</p>
+    </div>
+    <nav>
+      <a href="#servicos">Serviços</a>
+      <a href="#agendamento">Agendamento</a>
+      <a href="#contato">Contato</a>
+      <a href="#contato" class="btn-header">Agendar agora</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-texto animar">
+      <h2>Transformamos beleza<br>em <span>bem-estar</span></h2>
+      <p>Cabelos, unhas, cuidados com você. Um espaço pensado para realçar sua beleza com carinho e profissionalismo. Localizado no Jockey, Teresina.</p>
+      <div class="hero-btns">
+        <a href="#contato" class="btn-primary">Agendar horário 💅</a>
+        <a href="#servicos" class="btn-secondary">Ver serviços</a>
+      </div>
+    </div>
+    <div class="hero-card animar">
+      <h3>✨ Por que nos escolher?</h3>
+      <div class="hero-item"><span class="emoji">💅</span><div><strong>Unhas impecáveis</strong><p>Alongamento, blindagem e gel</p></div></div>
+      <div class="hero-item"><span class="emoji">💆</span><div><strong>Massagens relaxantes</strong><p>Drenagem, reflexologia e mais</p></div></div>
+      <div class="hero-item"><span class="emoji">👁️</span><div><strong>Lash Lifting</strong><p>Cílios naturais e expressivos</p></div></div>
+      <div class="hero-item"><span class="emoji">📅</span><div><strong>Seg a Sáb 9h às 18h</strong><p>Agende pelo WhatsApp</p></div></div>
+    </div>
+  </section>
+
+  <div class="numeros">
+    <div class="numero animar"><h3 data-meta="2307">0</h3><p>Seguidoras no Instagram</p></div>
+    <div class="numero animar"><h3 data-meta="147">0</h3><p>Posts publicados</p></div>
+    <div class="numero animar"><h3 data-meta="5">0</h3><p>Anos de experiência</p></div>
+    <div class="numero animar"><h3 data-meta="100">0</h3><p>% de dedicação</p></div>
+  </div>
+
+  <!-- SERVIÇOS -->
+  <section class="secao cinza" id="servicos">
+    <div class="secao-titulo animar">
+      <h2>Nossos Serviços</h2>
+      <p>Escolha a categoria e confira nossa tabela completa de valores</p>
+    </div>
+
+    <div class="servicos-tabs">
+      <button class="tab ativo" onclick="mostrarServico('unhas', this)">💅 Unhas</button>
+      <button class="tab" onclick="mostrarServico('massagem', this)">💆 Massagem</button>
+      <button class="tab" onclick="mostrarServico('estetica', this)">✨ Estética</button>
+      <button class="tab" onclick="mostrarServico('lash', this)">👁️ Lash Lifting</button>
+    </div>
+
+    <!-- UNHAS -->
+    <div class="servicos-conteudo ativo animar" id="servico-unhas">
+      <div class="servico-grupo">
+        <h3>💅 Manicure e Pedicure</h3>
+        <div class="servico-item"><span>Manicure simples</span><strong>R$ 45,00</strong></div>
+        <div class="servico-item"><span>Pedicure simples</span><strong>R$ 45,00</strong></div>
+        <div class="servico-item"><span>Esmaltação simples (mão/pé)</span><strong>R$ 30,00</strong></div>
+        <div class="servico-item"><span>Esmaltação em gel (mão)</span><strong>R$ 120,00</strong></div>
+        <div class="servico-item"><span>Esmaltação em gel (pé)</span><strong>R$ 110,00</strong></div>
+      </div>
+      <div class="servico-grupo">
+        <h3>✨ Esmaltação em Gel</h3>
+        <div class="servico-item"><span>Esmaltação em gel (cor única)</span><strong>R$ 130,00</strong></div>
+        <div class="servico-item"><span>Esmaltação em gel (pó cromado, francesa, efeito joia)</span><strong>R$ 160,00</strong></div>
+        <div class="servico-item"><span>Desenho nas unhas (nail art)</span><strong>R$ 60 a R$ 120</strong></div>
+      </div>
+      <div class="servico-grupo">
+        <h3>🔒 Blindagem</h3>
+        <div class="servico-item"><span>Blindagem (finalizado com topcoat)</span><strong>R$ 170,00</strong></div>
+        <div class="servico-item"><span>Blindagem + esmaltação em gel (cor única)</span><strong>R$ 260,00</strong></div>
+        <div class="servico-item"><span>Manutenção + cutilagem + esmaltação tradicional</span><strong>R$ 170,00</strong></div>
+        <div class="servico-item"><span>Manutenção + cutilagem + esmaltação em gel</span><strong>R$ 260,00</strong></div>
+      </div>
+      <div class="servico-grupo">
+        <h3>💎 Alongamento</h3>
+        <div class="servico-item"><span>Alongamento em gel</span><strong>R$ 230,00</strong></div>
+        <div class="servico-item"><span>Alongamento + esmaltação em gel (cor única)</span><strong>R$ 320,00</strong></div>
+        <div class="servico-item"><span>Alongamento + manicure simples</span><strong>R$ 270,00</strong></div>
+        <div class="servico-item"><span>Manutenção alongamento</span><strong>R$ 150,00</strong></div>
+        <div class="servico-item"><span>Blindagem de unhas</span><strong>R$ 150,00</strong></div>
+        <div class="servico-item"><span>Manutenção + esmaltação em gel (cor única)</span><strong>R$ 220,00</strong></div>
+      </div>
+      <div class="servico-grupo">
+        <h3>⭐ Adicionais</h3>
+        <div class="servico-item"><span>Francesa, pó cromado, efeito joia, babyboomer, reconstrução</span><strong>R$ 30,00 cada</strong></div>
+      </div>
+    </div>
+
+    <!-- MASSAGEM -->
+    <div class="servicos-conteudo animar" id="servico-massagem">
+      <div class="servico-grupo">
+        <h3>💆 Massagens</h3>
+        <div class="servico-item"><span>Massagem relaxante (1 hora)</span><strong>R$ 120,00</strong></div>
+        <div class="servico-item"><span>Massagem trapézio (30 minutos)</span><strong>R$ 60,00</strong></div>
+        <div class="servico-item"><span>Liberação de escápula (30 minutos)</span><strong>R$ 60,00</strong></div>
+        <div class="servico-item"><span>Reflexologia podal (30 minutos)</span><strong>R$ 70,00</strong></div>
+        <div class="servico-item"><span>Drenagem linfática abdominal</span><strong>R$ 150,00</strong></div>
+      </div>
+    </div>
+
+    <!-- ESTÉTICA -->
+    <div class="servicos-conteudo animar" id="servico-estetica">
+      <div class="servico-grupo">
+        <h3>✨ Epilação na Cera/Linha</h3>
+        <div class="servico-item"><span>Axila</span><strong>R$ 35,00</strong></div>
+        <div class="servico-item"><span>Meia perna</span><strong>R$ 60,00</strong></div>
+        <div class="servico-item"><span>Perna completa</span><strong>R$ 70,00</strong></div>
+        <div class="servico-item"><span>Buço</span><strong>R$ 25,00</strong></div>
+        <div class="servico-item"><span>Sobrancelha</span><strong>R$ 35,00</strong></div>
+        <div class="servico-item"><span>Contorno</span><strong>R$ 40,00</strong></div>
+        <div class="servico-item"><span>Contorno completo</span><strong>R$ 80,00</strong></div>
+      </div>
+      <div class="servico-grupo">
+        <h3>🎨 Sobrancelha e Maquiagem</h3>
+        <div class="servico-item"><span>Sobrancelha + Design com henna</span><strong>R$ 75,00</strong></div>
+        <div class="servico-item"><span>Maquiagem</span><strong>R$ 150,00</strong></div>
+      </div>
+    </div>
+
+    <!-- LASH LIFTING -->
+    <div class="servicos-conteudo animar" id="servico-lash">
+      <div class="servico-grupo">
+        <h3>👁️ Lash Lifting</h3>
+        <p style="color:#636e72; font-size:15px; margin-bottom:20px; line-height:1.7;">O Lash Lifting é um procedimento estético que curva, alonga e define os cílios naturais, proporcionando um olhar mais expressivo e volumoso sem a necessidade de cílios postiços ou rímel.</p>
+        <div class="servico-item"><span>Lash Lifting com tintura</span><strong>R$ 180,00</strong></div>
+        <div class="servico-item"><span>Lash Lifting sem tintura</span><strong>R$ 150,00</strong></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AGENDAMENTO -->
+  <section class="secao preto" id="agendamento">
+    <div class="secao-titulo animar">
+      <h2>Política de Agendamento</h2>
+      <p>Para garantir seu horário, leia com atenção</p>
+    </div>
+    <div class="agendamento-info animar" style="background:rgba(255,255,255,0.05); border-color:rgba(200,149,108,0.3); color:white;">
+      <h3 style="color:var(--rose-claro)">📋 Como funciona?</h3>
+      <p>✅ Para confirmar seu horário é necessário efetuar uma <strong style="color:var(--rose-claro)">reserva de R$ 50,00</strong></p>
+      <p>✅ O valor será <strong style="color:var(--rose-claro)">descontado no atendimento final</strong></p>
+      <p>❌ Cancelamentos sem aviso prévio de <strong style="color:var(--rose-claro)">24 horas</strong> — valor não reembolsável</p>
+      <p>❌ Atrasos superiores a <strong style="color:var(--rose-claro)">10 minutos</strong> ocasionam cancelamento do horário</p>
+      <p style="margin-top:16px;">💳 <strong style="color:var(--rose-claro)">PIX CNPJ:</strong> 54.430.831/0001-22 — Caixa Econômica</p>
+    </div>
+  </section>
+
+  <!-- CONTATO -->
+  <section class="secao cinza" id="contato">
+    <div class="secao-titulo animar">
+      <h2>Agende seu horário! 💅</h2>
+      <p>Preencha e entraremos em contato pelo WhatsApp rapidinho</p>
+    </div>
+    <div class="form animar">
+      <div class="form-row">
+        <input type="text" id="nome" placeholder="Seu nome completo">
+        <input type="tel" id="tel" placeholder="Seu WhatsApp">
+      </div>
+      <select id="servico">
+        <option>Escolha o serviço</option>
+        <optgroup label="💅 Unhas">
+          <option>Manicure simples - R$45</option>
+          <option>Pedicure simples - R$45</option>
+          <option>Esmaltação em gel (mão) - R$120</option>
+          <option>Alongamento em gel - R$230</option>
+          <option>Blindagem - R$170</option>
+          <option>Manutenção alongamento - R$150</option>
+        </optgroup>
+        <optgroup label="💆 Massagem">
+          <option>Massagem relaxante 1h - R$120</option>
+          <option>Drenagem linfática - R$150</option>
+          <option>Reflexologia podal - R$70</option>
+        </optgroup>
+        <optgroup label="✨ Estética">
+          <option>Epilação axila - R$35</option>
+          <option>Epilação perna completa - R$70</option>
+          <option>Sobrancelha + henna - R$75</option>
+          <option>Maquiagem - R$150</option>
+        </optgroup>
+        <optgroup label="👁️ Lash Lifting">
+          <option>Lash Lifting com tintura - R$180</option>
+          <option>Lash Lifting sem tintura - R$150</option>
+        </optgroup>
+      </select>
+      <textarea id="obs" placeholder="Alguma observação? (opcional)"></textarea>
+      <button class="btn-enviar" onclick="agendar()">Agendar pelo WhatsApp 💬</button>
+    </div>
+  </section>
+
+  <!-- DEPOIMENTOS -->
+  <section class="secao">
+    <div class="secao-titulo animar">
+      <h2>O que nossas clientes dizem</h2>
+      <p>Histórias reais de beleza e satisfação</p>
+    </div>
+    <div class="depoimentos-grid">
+      <div class="depoimento animar">
+        <div class="estrelas">★★★★★</div>
+        <p>Fiz o alongamento em gel e ficou perfeito! A Kaio tem muito talento e capricho. Já indiquei para todas as minhas amigas!</p>
+        <div class="autor"><div class="autor-avatar">A</div><div class="autor-info"><strong>Ana Paula</strong><span>Alongamento em gel</span></div></div>
+      </div>
+      <div class="depoimento animar">
+        <div class="estrelas">★★★★★</div>
+        <p>A massagem relaxante foi incrível! Saí completamente renovada. O espaço é muito aconchegante e a atendente super atenciosa!</p>
+        <div class="autor"><div class="autor-avatar">C</div><div class="autor-info"><strong>Carla Mendes</strong><span>Massagem relaxante</span></div></div>
+      </div>
+      <div class="depoimento animar">
+        <div class="estrelas">★★★★★</div>
+        <p>Meu lash lifting ficou maravilhoso! Parece que coloquei cílio postiço mas é tudo natural. Super recomendo o Kajú!</p>
+        <div class="autor"><div class="autor-avatar">F</div><div class="autor-info"><strong>Fernanda Lima</strong><span>Lash Lifting</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>✨ Kajú Espaço de Beleza</h4>
+        <p>Transformamos beleza em bem-estar com carinho, dedicação e profissionalismo.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Serviços</h4>
+        <a href="#servicos">Unhas e Alongamento</a>
+        <a href="#servicos">Massagens</a>
+        <a href="#servicos">Estética e Depilação</a>
+        <a href="#servicos">Lash Lifting</a>
+      </div>
+      <div class="footer-col">
+        <h4>Horários</h4>
+        <p>Segunda a Sábado</p>
+        <p>9h às 18h</p>
+        <p>Jockey - Teresina/PI</p>
+      </div>
+      <div class="footer-col">
+        <h4>Contato</h4>
+        <p>📱 (86) 99935-9299</p>
+        <p>📸 @kajuespacoblz</p>
+        <p>💳 PIX CNPJ: 54.430.831/0001-22</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 <span>Kajú Espaço de Beleza</span> — Todos os direitos reservados</p>
+    </div>
+  </footer>
+
+  <a href="https://wa.me/5586999359299" target="_blank" class="whatsapp-fixo">💬</a>
+
+  <script>
+    function mostrarServico(tipo, btn) {
+      document.querySelectorAll('.servicos-conteudo').forEach(el => el.classList.remove('ativo'));
+      document.querySelectorAll('.tab').forEach(el => el.classList.remove('ativo'));
+      document.getElementById('servico-' + tipo).classList.add('ativo');
+      btn.classList.add('ativo');
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visivel'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.animar').forEach(el => observer.observe(el));
+
+    function animarContador(el) {
+      const meta = parseInt(el.getAttribute('data-meta'));
+      let atual = 0;
+      const timer = setInterval(() => {
+        atual += meta / 60;
+        if (atual >= meta) { atual = meta; clearInterval(timer); }
+        el.textContent = Math.floor(atual).toLocaleString('pt-BR');
+      }, 30);
+    }
+
+    const contadorObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) { animarContador(entry.target); contadorObserver.unobserve(entry.target); }
+      });
+    });
+    document.querySelectorAll('[data-meta]').forEach(el => contadorObserver.observe(el));
+
+    function agendar() {
+      const nome = document.getElementById("nome").value;
+      const tel = document.getElementById("tel").value;
+      const servico = document.getElementById("servico").value;
+      const obs = document.getElementById("obs").value;
+
+      if (!nome || !tel || servico === "Escolha o serviço") {
+        alert("Por favor, preencha nome, WhatsApp e serviço!");
+        return;
+      }
+
+      let mensagem = `Olá! Me chamo ${nome} e gostaria de agendar: ${servico}. Meu WhatsApp é ${tel}.`;
+      if (obs) mensagem += ` Observação: ${obs}`;
+
+      window.open(`https://wa.me/5586999359299?text=${encodeURIComponent(mensagem)}`, "_blank");
+    }
+  </script>
+
+</body>
+</html>
